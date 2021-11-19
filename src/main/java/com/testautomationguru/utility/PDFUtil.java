@@ -70,7 +70,7 @@ public class PDFUtil {
         //高亮填充颜色 洋红色
 		this.imgColor = Color.MAGENTA;
 		this.bCompareAllPages = false;
-		this.compareMode = CompareMode.VISUAL_MODE;
+		this.compareMode = CompareMode.TEXT_MODE;
 		logger.setLevel(Level.OFF);
 		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 	}
@@ -364,7 +364,7 @@ public class PDFUtil {
         logger.info(file2Txt);
         logger.info("File 2 Txt : end -----------------------------------");
 
-		boolean result = file1Txt.equalsIgnoreCase(file2Txt);
+        final boolean result = file1Txt.equalsIgnoreCase(file2Txt);
 
 		if(!result){
 			logger.warning("PDF content does not match");

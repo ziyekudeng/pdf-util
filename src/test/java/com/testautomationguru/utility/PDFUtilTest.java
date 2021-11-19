@@ -146,6 +146,10 @@ public class PDFUtilTest {
         Assert.assertFalse(result);
     }
 
+    /**
+     * 从指定页开始比对
+     * @throws IOException
+     */
     @Test(priority = 10)
     public void comparePDFImageModeDiffSpecificPage() throws IOException {
         pdfutil.highlightPdfDifference(true);
@@ -155,6 +159,11 @@ public class PDFUtilTest {
         Assert.assertTrue(result);
     }
 
+    /**
+     * 获取文件所在绝对路径
+     * @param filename
+     * @return
+     */
     private String getFilePath(String filename) {
         return new File(getClass().getClassLoader().getResource(filename).getFile()).getAbsolutePath();
     }
