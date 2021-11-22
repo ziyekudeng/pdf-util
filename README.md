@@ -12,11 +12,8 @@ MVN Dependency:
 ```
 
 
-Getting `pdfutil.jar`
-====================
-
-Download this jar [here](http://www.testautomationguru.com/introducing-pdfutil-to-compare-pdf-files-extract-resources/).
-
+# RepairHistory
+1.修复差异内容不对，字体重影问题
 
 # Usage
 
