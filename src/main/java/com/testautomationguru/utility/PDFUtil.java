@@ -93,6 +93,14 @@ public class PDFUtil {
 		this.compareMode = mode;
 	}
 
+    /**
+     * 设置是否比对所有页 默认只比对出现错误的第一页
+     * @param bCompareAllPages
+     */
+
+    public void setBCompareAllPages(boolean bCompareAllPages){
+        this.bCompareAllPages = bCompareAllPages;
+    }
    /**
     * 此方法用于获取当前比较模式text/visual
    * This method is used to get the current comparison mode text/visual
@@ -526,7 +534,8 @@ public class PDFUtil {
 					fileName = this.getImageDestinationPath() + "/" + fileName + "_diff.png";
 
 					logger.info("Comparing Page No : " + (iPage+1));
-                    ///经过测试,分辨率 dpi为96,100,105,120,150,200中,105显示效果较为清晰,体积稳定,dpi越高图片体积越大,一般电脑显示分辨率为96
+                    //经过测试,分辨率dpi越高图片体积越大,一般电脑显示分辨率为105
+                    //分辨率影响执行效率
 					BufferedImage image1 = pdfRenderer1.renderImageWithDPI(iPage, 300, ImageType.RGB);
 					BufferedImage image2 = pdfRenderer2.renderImageWithDPI(iPage, 300, ImageType.RGB);
 					result = ImageUtil.compareAndHighlight(image1, image2, fileName, this.bHighlightPdfDifference, this.imgColor.getRGB()) && result;

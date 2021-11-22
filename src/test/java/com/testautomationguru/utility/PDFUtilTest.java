@@ -8,6 +8,8 @@ import org.testng.reporters.Files;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.util.List;
 
 public class PDFUtilTest {
@@ -15,11 +17,16 @@ public class PDFUtilTest {
     PDFUtil pdfutil = new PDFUtil();
 
     /**
-     * 启动日志打印 默认为 info
+     * 测试方法前置条件
      */
     @BeforeClass
-    public void enableLog(){
+    public void beforeApprovalConditions(){
+        //启动日志打印 默认为 info
         pdfutil.enableLog();
+        //使用图片模式进行比对
+        pdfutil.setCompareMode(CompareMode.VISUAL_MODE);
+        //比对所有页数
+        pdfutil.setBCompareAllPages(true);
     }
     /**
      * 获取pdf文件的页数
@@ -140,8 +147,8 @@ public class PDFUtilTest {
     public void comparePDFImageModeDiff() throws IOException {
         //高亮展示
         pdfutil.highlightPdfDifference(true);
-        String file1 = getFilePath("image-compare-diff/sample1.pdf");
-        String file2 = getFilePath("image-compare-diff/sample2.pdf");
+        String file1 = getFilePath("image-compare-diff/厂区封闭化改造项目合同.pdf");
+        String file2 = getFilePath("image-compare-diff/厂区封闭化改造项目合同对比.pdf");
         boolean result = pdfutil.compare(file1, file2);
         Assert.assertFalse(result);
     }
@@ -164,7 +171,11 @@ public class PDFUtilTest {
      * @param filename
      * @return
      */
-    private String getFilePath(String filename) {
-        return new File(getClass().getClassLoader().getResource(filename).getFile()).getAbsolutePath();
+    private String getFilePath(String filename) throws UnsupportedEncodingException {
+        URL resource = getClass().getClassLoader().getResource(filename);
+        String file = resource.getFile();
+        file = java.net.URLDecoder.decode(file,"utf-8");
+        String absolutePath = new File(file).getAbsolutePath();
+        return absolutePath;
     }
 }
