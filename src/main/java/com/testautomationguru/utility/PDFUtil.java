@@ -67,6 +67,10 @@ public class PDFUtil {
      */
     private boolean bGenerateAllCompareImage;
     /*
+     *是否合并比对图片
+     */
+    private boolean bMergeCompareImage;
+    /*
     *颜色
      */
 	private Color imgColor;
@@ -100,6 +104,7 @@ public class PDFUtil {
 		this.imgColor = Color.MAGENTA;
         this.bGenerateAllCompareImage = false;
 		this.bCompareAllPages = false;
+        this.bMergeCompareImage = false;
 		this.compareMode = CompareMode.TEXT_MODE;
 		logger.setLevel(Level.OFF);
 		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
@@ -199,6 +204,13 @@ public class PDFUtil {
      */
     public void generateAllCompareImage(boolean flag){
         this.bGenerateAllCompareImage = flag;
+    }
+    /**
+     * 是否合并比对的图片数据
+     * @param flag true - 合并 ; false - 不合并
+     */
+    public void mergeCompareImage(boolean flag){
+        this.bMergeCompareImage = flag;
     }
 
    /**

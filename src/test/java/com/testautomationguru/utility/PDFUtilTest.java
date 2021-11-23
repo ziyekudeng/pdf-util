@@ -148,7 +148,9 @@ public class PDFUtilTest {
         //高亮展示
         pdfutil.highlightPdfDifference(true);
         //生成所有比对图片
-        pdfutil.generateAllCompareImage(true);
+        pdfutil.generateAllCompareImage(false);
+        //合并比对图片
+        pdfutil.mergeCompareImage(false);
         String file1 = getFilePath("image-compare-diff/厂区封闭化改造项目合同.pdf");
         String file2 = getFilePath("image-compare-diff/厂区封闭化改造项目合同对比.pdf");
         boolean result = pdfutil.compare(file1, file2);
