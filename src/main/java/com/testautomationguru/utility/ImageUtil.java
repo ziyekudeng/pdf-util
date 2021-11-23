@@ -304,7 +304,7 @@ class ImageUtil {
         imageList.add(bufferedImage21);
         imageList.add(bufferedImage22);
         imageList.add(bufferedImage23);
-        imageList.add(bufferedImage23);
+        imageList.add(bufferedImage24);
         MergeImageInfo mergeImageInfo = mergeImages(imageList, false);
 
 //        generateSaveFile(mergeImageInfo.getMergeImage(), "文件保存路径", "jpeg");
