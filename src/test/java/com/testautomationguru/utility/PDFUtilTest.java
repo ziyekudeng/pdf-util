@@ -101,8 +101,8 @@ public class PDFUtilTest {
      */
     @Test(priority = 6)
     public void comparePDFTextModeDiff() throws IOException {
-        String file1 = getFilePath("text-compare/sample1.pdf");
-        String file2 = getFilePath("text-compare/sample2.pdf");
+        String file1 = getFilePath("image-compare-diff/厂区封闭化改造项目合同.pdf");
+        String file2 = getFilePath("image-compare-diff/厂区封闭化改造项目合同对比.pdf");
         pdfutil.setCompareMode(CompareMode.TEXT_MODE);
 
         boolean result = pdfutil.compare(file1, file2);
@@ -147,6 +147,8 @@ public class PDFUtilTest {
     public void comparePDFImageModeDiff() throws IOException {
         //高亮展示
         pdfutil.highlightPdfDifference(true);
+        //生成所有比对图片
+        pdfutil.generateAllCompareImage(true);
         String file1 = getFilePath("image-compare-diff/厂区封闭化改造项目合同.pdf");
         String file2 = getFilePath("image-compare-diff/厂区封闭化改造项目合同对比.pdf");
         boolean result = pdfutil.compare(file1, file2);

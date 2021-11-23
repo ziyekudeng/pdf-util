@@ -49,13 +49,42 @@ import java.util.logging.Logger;
 
 public class PDFUtil {
     private final static Logger logger = Logger.getLogger(PDFUtil.class.getName());
+    /*
+    *存储图像的路径
+     */
 	private String imageDestinationPath;
+    /*
+    *是否去除空白字符
+    * 默认：\s 表示匹配任何空白字符，包括空格、制表符、换页符等等, 等价于[ \f\n\r\t\v]
+     */
 	private boolean bTrimWhiteSpace;
+    /*
+    *是否以图片高亮模式展示pdf文件差异
+     */
 	private boolean bHighlightPdfDifference;
+    /*
+    *是否生成所有比对图片
+     */
+    private boolean bGenerateAllCompareImage;
+    /*
+    *颜色
+     */
 	private Color imgColor;
+    /*
+    *文本过滤器
+     */
 	private PDFTextStripper stripper;
+    /*
+    *是否比较所有页
+     */
 	private boolean bCompareAllPages;
+    /*
+    *对比模式：默认文字对比
+     */
 	private CompareMode compareMode;
+    /*
+    *需要过滤的内容，支持正则表达式
+     */
 	private String[] excludePattern;
 	private int startPage = 1;
 	private int endPage = -1;
@@ -69,6 +98,7 @@ public class PDFUtil {
 		this.bHighlightPdfDifference = false;
         //高亮填充颜色 洋红色
 		this.imgColor = Color.MAGENTA;
+        this.bGenerateAllCompareImage = false;
 		this.bCompareAllPages = false;
 		this.compareMode = CompareMode.TEXT_MODE;
 		logger.setLevel(Level.OFF);
@@ -162,6 +192,14 @@ public class PDFUtil {
 	public void highlightPdfDifference(boolean flag){
 		this.bHighlightPdfDifference = flag;
 	}
+
+    /**
+     * 是否生成所有比对的图片数据
+     * @param flag true - 生成所有数据 ; false - 仅生成差异文件
+     */
+    public void generateAllCompareImage(boolean flag){
+        this.bGenerateAllCompareImage = flag;
+    }
 
    /**
     * 是否以图片高亮模式展示pdf文件差异(设置高亮颜色)
@@ -271,7 +309,6 @@ public class PDFUtil {
 		this.updateStartAndEndPages(file, startPage, endPage);
 		localStripper.setStartPage(this.startPage);
 		localStripper.setEndPage(this.endPage);
-
 		String txt = localStripper.getText(doc);
 		logger.info("PDF Text before trimming : " + txt);
 		if(this.bTrimWhiteSpace){
@@ -538,7 +575,7 @@ public class PDFUtil {
                     //分辨率影响执行效率
 					BufferedImage image1 = pdfRenderer1.renderImageWithDPI(iPage, 300, ImageType.RGB);
 					BufferedImage image2 = pdfRenderer2.renderImageWithDPI(iPage, 300, ImageType.RGB);
-					result = ImageUtil.compareAndHighlight(image1, image2, fileName, this.bHighlightPdfDifference, this.imgColor.getRGB()) && result;
+					result = ImageUtil.compareAndHighlight(image1, image2, fileName, this.bHighlightPdfDifference,this.bGenerateAllCompareImage, this.imgColor.getRGB()) && result;
 					if(!this.bCompareAllPages && !result){
 						break;
 					}
