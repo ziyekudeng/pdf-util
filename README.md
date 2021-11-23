@@ -14,6 +14,12 @@ MVN Dependency:
 
 # RepairHistory
 1.修复差异内容不对，字体重影问题
+2.增加输出全部比对图片方法
+3.增加图片合并功能
+
+# maven configure
+问题1: idea控制台打包,javadoc乱码?
+解决:在IDEA中，打开File | Settings | Build, Execution, Deployment | Build Tools | Maven | Runner在VM Options中添加-Dfile.encoding=GBK，切记一定是GBK。即使用UTF-8的话，依然是乱码，这是因为Maven的默认平台编码是GBK
 
 # Usage
 
