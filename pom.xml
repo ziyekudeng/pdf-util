@@ -10,6 +10,11 @@
     <url>www.testautomationguru.com</url>
     <description>PDF Compare Utility</description>
 
+    <properties>
+        <project.build.sourceEncoding>
+            UTF-8
+        </project.build.sourceEncoding>
+    </properties>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

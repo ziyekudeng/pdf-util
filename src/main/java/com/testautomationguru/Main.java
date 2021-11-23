@@ -17,6 +17,7 @@ public final class Main {
 
 			if(args.length>2){
 				pdfutil.highlightPdfDifference(true);
+                pdfutil.generateAllCompareImage(true);
 				pdfutil.setImageDestinationPath(args[2]);
 			}
 
