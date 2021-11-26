@@ -70,6 +70,7 @@ public class PDFUtil {
      *是否合并比对图片
      */
     private boolean bMergeCompareImage;
+
     /*
     *颜色
      */
@@ -577,7 +578,6 @@ public class PDFUtil {
 				pdfRenderer1 = new PDFRenderer(doc1);
 				pdfRenderer2 = new PDFRenderer(doc2);
 
-
 				for(int iPage=startPage-1;iPage<endPage;iPage++){
 					String fileName = new File(file1).getName().replace(".pdf", "_") + (iPage + 1);
 					fileName = this.getImageDestinationPath() + "/" + fileName + "_diff.png";
@@ -587,11 +587,35 @@ public class PDFUtil {
                     //分辨率影响执行效率
 					BufferedImage image1 = pdfRenderer1.renderImageWithDPI(iPage, 300, ImageType.RGB);
 					BufferedImage image2 = pdfRenderer2.renderImageWithDPI(iPage, 300, ImageType.RGB);
-					result = ImageUtil.compareAndHighlight(image1, image2, fileName, this.bHighlightPdfDifference,this.bGenerateAllCompareImage, this.imgColor.getRGB()) && result;
+					result = ImageUtil.compareAndHighlight(image1, image2, fileName
+                            ,this.bHighlightPdfDifference,this.bGenerateAllCompareImage
+                            ,this.imgColor.getRGB()) && result;
 					if(!this.bCompareAllPages && !result){
 						break;
 					}
 				}
+                /*
+                *合并对比图片
+                 */
+            if (this.bMergeCompareImage) {
+                //获取保存图片列表
+                File folder = new File(this.getImageDestinationPath());
+                String[] fileList = folder.list();
+                if (fileList==null||fileList.length==0) {
+                    logger.info("对比结果文件夹内没有生成对比图片,无法合并!");
+                    return result;
+                }
+                List<BufferedImage> imageList = new ArrayList<>();
+                for (String fileName : fileList) {
+                    BufferedImage bufferedImage = ImageUtil.getBufferedImageByLocal(this.getImageDestinationPath()+File.separator+fileName);
+                    imageList.add(bufferedImage);
+                }
+                ImageUtil.MergeImageInfo mergeImageInfo = ImageUtil.mergeImages(imageList, false);
+                String replace = new File(file1).getName().replace(".pdf", "_diff.png");
+                replace=this.getImageDestinationPath()+File.separator+replace;
+                logger.info(" ImageIO write : "+replace);
+                ImageUtil.saveImage(mergeImageInfo.getMergeImage(), replace, "png");
+            }
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{
